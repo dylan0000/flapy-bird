@@ -3767,7 +3767,13 @@ game.onUpdate(function () {
 })
 game.onUpdate(function () {
     if (mySprite.bottom == scene.screenHeight() || mySprite.y == 9) {
-        game.over(false)
+        if (info.score() < info.highScore()) {
+            game.showLongText("You didnt beat the highscore " + name, DialogLayout.Top)
+            game.over(false, effects.splatter)
+        } else {
+            game.showLongText("you beat the highscore " + name, DialogLayout.Top)
+            game.over(true, effects.confetti)
+        }
     }
 })
 game.onUpdateInterval(500, function () {
