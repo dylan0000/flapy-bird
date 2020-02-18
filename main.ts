@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const cheat = SpriteKind.create()
+}
 function spriteCOLor () {
     spriterandomcolors = [img`
 . . . . . . . . . . . . . . . . 
@@ -137,7 +140,22 @@ function spriteCOLor () {
 . . . . . . . . . . . . . . . . 
 `]
 }
+function last () {
+    ms = 20
+    projectile2 = sprites.createProjectileFromSide(list[Math.randomRange(0, list.length - 1)], -70, 0)
+    projectile2.y = 50
+}
+controller.combos.attachCombo("lrab", function () {
+    mySprite.setKind(SpriteKind.cheat)
+    mySprite.setFlag(SpriteFlag.BounceOnWall, true)
+    mySprite.vx = 100
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    game.over(false)
+})
 function _set () {
+    name = game.askForString("what is your name")
+    game.splash("goodluck " + name)
     mySprite = sprites.create(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -167,14 +185,6 @@ function _set () {
     all_trees()
     ms = 1500
 }
-function last () {
-    ms = 20
-    projectile2 = sprites.createProjectileFromSide(list[Math.randomRange(0, list.length - 1)], -70, 0)
-    projectile2.y = 50
-}
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    game.over(false)
-})
 function all_trees () {
     if (gap == 0) {
         list = [img`
@@ -3738,14 +3748,15 @@ controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
 let number1 = 0
 let projectile: Sprite = null
 let image2: Image = null
-let list: Image[] = []
-let projectile2: Sprite = null
-let ms = 0
 let levels1 = false
 let hiddenscore = 0
 let speed = 0
 let gap = 0
+let name = ""
 let mySprite: Sprite = null
+let list: Image[] = []
+let projectile2: Sprite = null
+let ms = 0
 let spriterandomcolors: Image[] = []
 spriteCOLor()
 _set()
