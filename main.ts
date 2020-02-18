@@ -148,7 +148,7 @@ function spriteCOLor () {
 function last () {
     scene.cameraShake(3, 500)
     ms = 20
-    projectile2 = sprites.createProjectileFromSide(list[Math.randomRange(0, list.length - 1)], -50, 0)
+    projectile2 = sprites.createProjectileFromSide(list[Math.randomRange(0, list.length - 1)], -65, 0)
     effects.blizzard.startScreenEffect()
     animation.runMovementAnimation(
     projectile2,
@@ -193,7 +193,7 @@ function _set () {
     gap = 0
     speed = -45
     // changes forms
-    hiddenscore = 0
+    hiddenscore = 19
     // just for design does not affect gameplay
     info.setScore(0)
     levels1 = true
@@ -3601,6 +3601,7 @@ controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 let number1 = 0
 let projectile: Sprite = null
+let callonce = 0
 let image2: Image = null
 let levels1 = false
 let hiddenscore = 0
@@ -3643,17 +3644,35 @@ game.onUpdateInterval(ms, function () {
             image2 = list[Math.randomRange(0, list.length - 1)]
         } else if (gap == 1) {
             image2 = list[Math.randomRange(0, list.length - 1)]
+            if (callonce == 1) {
+                game.splash("the things are faster now")
+                callonce = 0
+            }
         } else if (gap == 2) {
             image2 = list[Math.randomRange(0, list.length - 1)]
+            animation.runMovementAnimation(
+            projectile,
+            animation.animationPresets(animation.bobbingLeft),
+            5000,
+            false
+            )
+            if (callonce == 1) {
+                game.splash("the things are faster now", "v2")
+                callonce = 0
+            }
         }
         if (hiddenscore == 10) {
             gap = 1
             speed = -55
+            callonce = 1
         } else if (hiddenscore == 20) {
             gap = 2
-            speed = -62
-        } else if (hiddenscore == 25) {
+            speed = -64
+            callonce = 1
+        } else if (hiddenscore == 30) {
             levels1 = false
+            game.splash("ok good luck")
+            callonce += 1
             ms = 500
         }
         effects.clouds.startScreenEffect()
@@ -3786,7 +3805,7 @@ e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e 
         }
         projectile.y = 65
     }
-    if (hiddenscore == 25) {
+    if (hiddenscore == 30) {
         projectile.destroy()
     }
     if (hiddenscore >= 40) {
