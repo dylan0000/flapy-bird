@@ -191,9 +191,9 @@ function _set () {
     mySprite.ay = 300
     mySprite.setFlag(SpriteFlag.StayInScreen, true)
     gap = 0
-    speed = -45
+    speed = -42
     // changes forms
-    hiddenscore = 19
+    hiddenscore = 0
     // just for design does not affect gameplay
     info.setScore(0)
     levels1 = true
@@ -3600,8 +3600,8 @@ controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 let number1 = 0
-let projectile: Sprite = null
 let callonce = 0
+let projectile: Sprite = null
 let image2: Image = null
 let levels1 = false
 let hiddenscore = 0
@@ -3644,6 +3644,12 @@ game.onUpdateInterval(ms, function () {
             image2 = list[Math.randomRange(0, list.length - 1)]
         } else if (gap == 1) {
             image2 = list[Math.randomRange(0, list.length - 1)]
+            animation.runMovementAnimation(
+            projectile,
+            animation.animationPresets(animation.shake),
+            300,
+            false
+            )
             if (callonce == 1) {
                 game.splash("the things are faster now")
                 callonce = 0
